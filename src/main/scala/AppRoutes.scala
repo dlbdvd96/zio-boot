@@ -2,7 +2,7 @@ import aliases.URRoutes
 import layers.{CounterService, HelloService}
 import routes.{CounterRoutes, HelloRoutes}
 
-object MainRoutes:
+object AppRoutes:
 
   val routes: URRoutes[HelloService & CounterService] =
-    HelloRoutes.routes.sandbox ++ CounterRoutes.routes.sandbox
+    (HelloRoutes.routes ++ CounterRoutes.routes).sandbox
