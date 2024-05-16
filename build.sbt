@@ -1,4 +1,4 @@
-scalaVersion := "3.4.0"
+scalaVersion := "3.4.2"
 
 resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 
