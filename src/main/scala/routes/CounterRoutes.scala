@@ -1,17 +1,22 @@
 package routes
 
-import aliases.URRoutes
+import aliases.{URRoute, URRoutes}
+import endpoints.CounterEndpoints
 import layers.CounterService
-import zio.direct.*
 import zio.http.*
 
 object CounterRoutes:
-  val routes: URRoutes[CounterService] = Routes(
-    Method.GET / "count" -> handler((_: Request) =>
-      withContext((counterService: CounterService) =>
-        defer:
-          counterService.inc.run
-          Response.text(counterService.get.run.toString)
+
+  def apply(): URRoutes[CounterService] = Routes(count)
+
+  val count: URRoute[CounterService] = CounterEndpoints.count
+    .implement(
+      handler(
+        withContext((counterService: CounterService) =>
+          for {
+            _ <- counterService.inc
+            value <- counterService.get
+          } yield value
+        )
       )
     )
-  )

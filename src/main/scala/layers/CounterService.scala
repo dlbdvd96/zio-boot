@@ -2,9 +2,10 @@ package layers
 
 import zio.{Ref, UIO}
 
-class CounterService:
-  val value: UIO[Ref[Int]] = Ref.make(0)
+class CounterService(value: Ref[Int]):
+  def inc: UIO[Unit] = value.update(_ + 1)
+  def dec: UIO[Unit] = value.update(_ - 1)
+  def get: UIO[Int] = value.get
 
-  def inc: UIO[Unit] = value.flatMap(_.update(_ - 1))
-  def dec: UIO[Unit] = value.flatMap(_.update(_ - 1))
-  def get: UIO[Int] = value.flatMap(_.get)
+object CounterService:
+  def apply(): UIO[CounterService] = Ref.make(0).map(new CounterService(_))

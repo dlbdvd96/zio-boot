@@ -4,10 +4,10 @@ import zio.{Tag, TaskLayer, ZIO, ZLayer}
 
 object AppLayers:
 
-  val layers: TaskLayer[Server & HelloService & CounterService] =
+  def apply(): TaskLayer[Server & HelloService & CounterService] =
     ZLayer.make[Server & HelloService & CounterService](
       Server.default,
       ZLayer.derive[HelloService],
       ZLayer.derive[ServiceB],
-      ZLayer.derive[CounterService]
+      ZLayer.fromZIO(CounterService())
     )

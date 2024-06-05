@@ -10,7 +10,7 @@ object CounterServiceMock extends Mock[CounterService]:
   object Dec extends Effect[Unit, Nothing, Unit]
   object Get extends Effect[Unit, Nothing, Int]
 
-  def counterService(proxy: Proxy): CounterService = new CounterService {
+  def counterService(proxy: Proxy): CounterService = new CounterService(null) {
     override val inc: UIO[Unit] = proxy(Inc)
     override val dec: UIO[Unit] = proxy(Dec)
     override val get: UIO[Int] = proxy(Get)

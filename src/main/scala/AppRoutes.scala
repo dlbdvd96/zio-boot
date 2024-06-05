@@ -1,8 +1,9 @@
 import aliases.URRoutes
 import layers.{CounterService, HelloService}
+import openapi.SwaggerRoutes
 import routes.{CounterRoutes, HelloRoutes}
 
 object AppRoutes:
 
-  val routes: URRoutes[HelloService & CounterService] =
-    (HelloRoutes.routes ++ CounterRoutes.routes).sandbox
+  def apply(): URRoutes[HelloService & CounterService] =
+    SwaggerRoutes() ++ CounterRoutes() ++ HelloRoutes()
