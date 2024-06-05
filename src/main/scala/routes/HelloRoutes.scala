@@ -6,9 +6,7 @@ import layers.HelloService
 import zio.http.*
 
 object HelloRoutes:
-
-  def apply(): URRoutes[HelloService] = Routes(hello)
-
+  
   val hello: URRoute[HelloService] =
     HelloEndpoints.hello.implement(
       handler((request: String) =>

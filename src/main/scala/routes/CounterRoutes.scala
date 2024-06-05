@@ -7,8 +7,6 @@ import zio.http.*
 
 object CounterRoutes:
 
-  def apply(): URRoutes[CounterService] = Routes(count)
-
   val count: URRoute[CounterService] = CounterEndpoints.count
     .implement(
       handler(

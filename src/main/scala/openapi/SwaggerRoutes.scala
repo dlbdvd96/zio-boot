@@ -7,5 +7,5 @@ import zio.http.codec.PathCodec.*
 import zio.http.endpoint.openapi.{OpenAPI, SwaggerUI}
 
 object SwaggerRoutes:
-  def apply(): URoutes =
-    SwaggerUI.routes("docs" / "openapi", openAPI).sandbox
+  
+  val routes: URoutes = SwaggerUI.routes("docs" / "openapi", openAPI).sandbox
