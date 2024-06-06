@@ -6,7 +6,7 @@ import zio.http.*
 import zio.http.codec.PathCodec.*
 import zio.http.endpoint.openapi.{OpenAPI, OpenAPIGen, SwaggerUI}
 
-object SwaggerRoutes:
+object Swagger:
   private val openAPI: OpenAPI =
     OpenAPIGen.fromEndpoints(
       title = "App API",
@@ -15,4 +15,4 @@ object SwaggerRoutes:
       CounterControllers.count.endpoint
     )
 
-  def apply(): URoutes = SwaggerUI.routes("docs" / "openapi", openAPI).sandbox
+  val routes: URoutes = SwaggerUI.routes("docs" / "openapi", openAPI).sandbox
