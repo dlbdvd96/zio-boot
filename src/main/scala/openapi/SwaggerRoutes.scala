@@ -1,11 +1,18 @@
 package openapi
 
 import aliases.URoutes
-import openapi.OpenApi.openAPI
+import controllers.{CounterControllers, HelloControllers}
 import zio.http.*
 import zio.http.codec.PathCodec.*
-import zio.http.endpoint.openapi.{OpenAPI, SwaggerUI}
+import zio.http.endpoint.openapi.{OpenAPI, OpenAPIGen, SwaggerUI}
 
 object SwaggerRoutes:
-  
-  val routes: URoutes = SwaggerUI.routes("docs" / "openapi", openAPI).sandbox
+  private val openAPI: OpenAPI =
+    OpenAPIGen.fromEndpoints(
+      title = "App API",
+      version = "1.0",
+      HelloControllers.hello.endpoint,
+      CounterControllers.count.endpoint
+    )
+
+  def apply(): URoutes = SwaggerUI.routes("docs" / "openapi", openAPI).sandbox
